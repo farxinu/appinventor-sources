@@ -401,7 +401,6 @@ public class YaVersion {
   // - iSENSE was removed
   // - Added HorizontalScrollArrangement and VerticalScrollArrangement
 
->>>>>>> fbe026a433433fddabd242696e1fcba6af9dd397
   public static final int YOUNG_ANDROID_VERSION = 158;
 
   // ............................... Blocks Language Version Number ...............................
