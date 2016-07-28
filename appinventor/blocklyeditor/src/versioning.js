@@ -1431,6 +1431,13 @@ Blockly.Versioning.AllUpgradeMaps =
 
   }, // End HorizontalArrangement upgraders
 
+  "HorizontalScrollArrangement": {
+
+    // This is initial version. Placeholder for future upgrades
+    1: "noUpgrade"
+
+  }, // End HorizontalScrollArrangement upgraders
+
   "Image": {
 
     //This is initial version. Placeholder for future upgrades
@@ -2283,6 +2290,13 @@ Blockly.Versioning.AllUpgradeMaps =
     3: "noUpgrade"
 
   }, // End VerticalArrangement upgraders
+
+  "VerticalScrollArrangement": {
+
+    //This is initial version. Placeholder for future upgrades
+    1: "noUpgrade"
+
+  }, // End VerticalScrollArrangement upgraders
 
   "VideoPlayer": {
 
