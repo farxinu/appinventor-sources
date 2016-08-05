@@ -1,4 +1,4 @@
-package com.google.appinventor.components.runtime;
+package edu.uml.cs.isense; 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,10 +31,11 @@ import com.google.appinventor.components.annotations.UsesLibraries;
 import com.google.appinventor.components.annotations.UsesPermissions;
 import com.google.appinventor.components.common.ComponentCategory;
 import com.google.appinventor.components.common.PropertyTypeConstants;
-import com.google.appinventor.components.common.YaVersion;
-import com.google.appinventor.components.runtime.util.AsynchUtil;
 import com.google.appinventor.components.runtime.util.YailList;
-import com.google.appinventor.components.runtime.util.MediaUtil; 
+import com.google.appinventor.components.runtime.Component; 
+import com.google.appinventor.components.runtime.AndroidNonvisibleComponent; 
+import com.google.appinventor.components.runtime.ComponentContainer; 
+import com.google.appinventor.components.runtime.EventDispatcher; 
 
 import edu.uml.cs.isense.api.API;
 import edu.uml.cs.isense.api.UploadInfo;
@@ -43,16 +44,18 @@ import edu.uml.cs.isense.objects.RPerson;
 import edu.uml.cs.isense.objects.RProjectField;
 
 
-@DesignerComponent(version = YaVersion.ISENSEPUBLISHER_COMPONENT_VERSION,
+@DesignerComponent(version = iSENSEPublisher.VERSION,
     description = "A component that provides a high-level interface to iSENSEProject.org",
-    category = ComponentCategory.CONNECTIVITY,
+    category = ComponentCategory.EXTENSION,
     nonVisible = true,
-    iconName = "images/isense.png")
+    iconName = "images/extension.png")
 @SimpleObject
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
 
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
+
+  public static final int VERSION = 1; 
 
   private int ProjectID;
   private int dataSetID = -1;
