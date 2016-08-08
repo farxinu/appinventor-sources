@@ -56,17 +56,14 @@ import edu.uml.cs.isense.objects.RProjectField;
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
 
   public static final int VERSION = 1; 
+  private static final String CONTRIBUTORNAME = "AppVis"; 
 
   private int ProjectID;
-  private int dataSetID = -1;
-  private int mediaID = -1;
   private String ContributorKey;
   private LinkedList<DataObject> pending; 
   private final API api;
-  private final Handler androidUIHandler;
   private static Activity activity; 
 
-  private final String CONTRIBUTORNAME = "AppVis"; 
 
   public iSENSEPublisher(ComponentContainer container) {
     super(container.$form());
@@ -75,7 +72,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     ProjectID(-1); 
     ContributorKey(""); 
     pending = new LinkedList<DataObject>(); 
-    androidUIHandler = new Handler();
     activity = container.$context(); 
   } 
 
