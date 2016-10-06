@@ -48,7 +48,8 @@ import edu.uml.cs.isense.objects.RProjectField;
     description = "A component that provides a high-level interface to iSENSEProject.org",
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
-    iconName = "images/extension.png")
+    //iconName = "images/extension.png")
+    iconName = "https://raw.githubusercontent.com/farxinu/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
@@ -294,12 +295,17 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return pending.size(); 
     }
 
-  // Get visualization url
-  @SimpleFunction(description = "Gets URL of visualization in presentation or embedded mode")
-	public String GetVisualizationUrl() {
-		return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?presentation=true";
-	}
+  // Get visualization url for this project
+  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
+    public String GetVisURL() {
+      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?presentation=true";
+    }
 
+  // Get visualization url with controls for this project
+  @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
+    public String GetVisWithControlsURL() {
+      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?embed=true";
+    }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
     public void UploadDataSetSucceeded(int datasetId) {
