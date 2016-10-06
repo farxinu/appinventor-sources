@@ -57,6 +57,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   public static final int VERSION = 1; 
   private static final String CONTRIBUTORNAME = "AppVis"; 
+  private static final int QUEUEDEPTH = 20;
 
   private int ProjectID;
   private String ContributorKey;
@@ -175,7 +176,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     // This is what actually runs in the background thread, so it's safe to block
     protected Integer doInBackground(Void... v) {
 
-      DataObject dob = pending.peek(); 
+      DataObject dob = pending.remove(); 
       // ensure that the lists are the same size 
       if (dob.fields.size() != dob.data.size()) {
         Log.e("iSENSE", "Input lists are not the same size!"); 
@@ -183,7 +184,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       } 
 
       // A simple throttle if too much data is being thrown at the upload queue 
-      if (pending.size() > 20) {
+      if (pending.size() > QUEUEDEPTH) {
         Log.e("iSENSE", "Too many items in upload queue!"); 
         return -1;  
       }
@@ -264,7 +265,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // After background thread execution, UI handler runs this 
     protected void onPostExecute(Integer result) {
-      DataObject dob = pending.remove();
       if (result == -1) {
         UploadDataSetFailed(); 
       } else {
@@ -293,6 +293,13 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public int GetNumberPendingUploads() {
       return pending.size(); 
     }
+
+  // Get visualization url
+  @SimpleFunction(description = "Gets URL of visualization in presentation or embedded mode")
+	public String GetVisualizationUrl() {
+		return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?presentation=true";
+	}
+
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
     public void UploadDataSetSucceeded(int datasetId) {
