@@ -49,7 +49,7 @@ import edu.uml.cs.isense.objects.RProjectField;
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
     //iconName = "images/extension.png")
-    iconName = "https://raw.githubusercontent.com/isenseDev/rSENSE/master/app/assets/images/isense-logo-small.png")
+    iconName = "https://raw.githubusercontent.com/farxinu/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
