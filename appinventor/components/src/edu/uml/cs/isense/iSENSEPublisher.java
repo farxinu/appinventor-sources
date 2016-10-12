@@ -48,7 +48,8 @@ import edu.uml.cs.isense.objects.RProjectField;
     description = "A component that provides a high-level interface to iSENSEProject.org",
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
-    iconName = "images/extension.png")
+    //iconName = "images/extension.png")
+    iconName = "https://raw.githubusercontent.com/isenseDev/rSENSE/master/app/assets/images/isense-logo-small.png")
 @SimpleObject(external = true)
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
@@ -57,6 +58,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   public static final int VERSION = 1; 
   private static final String CONTRIBUTORNAME = "AppVis"; 
+  private static final int QUEUEDEPTH = 20;
 
   private int ProjectID;
   private String ContributorKey;
@@ -183,7 +185,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       } 
 
       // A simple throttle if too much data is being thrown at the upload queue 
-      if (pending.size() > 20) {
+      if (pending.size() > QUEUEDEPTH) {
         Log.e("iSENSE", "Too many items in upload queue!"); 
         return -1;  
       }
@@ -292,6 +294,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleFunction(description = "Gets number of pending background uploads. Advanced feature.")
     public int GetNumberPendingUploads() {
       return pending.size(); 
+    }
+
+  // Get visualization url for this project
+  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
+    public String GetVisURL() {
+      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?presentation=true";
+    }
+
+  // Get visualization url with controls for this project
+  @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
+    public String GetVisWithControlsURL() {
+      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?embed=true";
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
