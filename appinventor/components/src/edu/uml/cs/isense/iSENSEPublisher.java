@@ -65,7 +65,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private LinkedList<DataObject> pending; 
   private final API api;
   private static Activity activity; 
-
+  private int numPending;
 
   public iSENSEPublisher(ComponentContainer container) {
     super(container.$form());
@@ -75,6 +75,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     ContributorKey(""); 
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
+	numPending = 0;
   } 
 
   // Block Properties
@@ -108,7 +109,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void UploadDataSet(final String DataSetName, final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data);
-      pending.add(dob);  
+      pending.add(dob);
+	  numPending++;  
       new UploadTask().execute(); 
     }
 
@@ -143,6 +145,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // Create new "DataObject" and add it to the upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data, path); 
       pending.add(dob); 
+	  numPending++;
       new UploadTask().execute(); 
     } 
 
@@ -266,6 +269,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // After background thread execution, UI handler runs this 
     protected void onPostExecute(Integer result) {
+      numPending--;
       if (result == -1) {
         UploadDataSetFailed(); 
       } else {
@@ -292,7 +296,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Get Number of Pending Uploads (Advanced Feature)
   @SimpleFunction(description = "Gets number of pending background uploads. Advanced feature.")
     public int GetNumberPendingUploads() {
-      return pending.size(); 
+      return numPending; 
     }
 
   // Get visualization url for this project
