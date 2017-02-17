@@ -58,7 +58,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   public static final int VERSION = 1; 
   private static final String CONTRIBUTORNAME = "AppVis"; 
-  private static final int QUEUEDEPTH = 20;
+  private static final int QUEUEDEPTH = 30;
 
   private int ProjectID;
   private String ContributorKey;
@@ -75,7 +75,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     ContributorKey(""); 
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
-	numPending = 0;
+    numPending = 0;
   } 
 
   // Block Properties
@@ -109,8 +109,12 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void UploadDataSet(final String DataSetName, final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data);
+      if (pending.size() >= QUEUEDEPTH) {
+        UploadDataSetFailed();
+        return;
+      }
       pending.add(dob);
-	  numPending++;  
+      numPending++;  
       new UploadTask().execute(); 
     }
 
@@ -118,6 +122,10 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleFunction(description = "Uploads a dataset and a photo")
     public void UploadDataSetWithPhoto(final String DataSetName, final YailList Fields, final YailList Data, final String Photo) {
 
+      if (pending.size() >= QUEUEDEPTH) {
+        UploadDataSetFailed();
+        return;
+      }
       // Validate photo
       String path = ""; 
       String[] pathtokens = Photo.split("/"); 
@@ -145,7 +153,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // Create new "DataObject" and add it to the upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data, path); 
       pending.add(dob); 
-	  numPending++;
+      numPending++;
       new UploadTask().execute(); 
     } 
 
